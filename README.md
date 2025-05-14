@@ -1,3 +1,4 @@
+```mermaid
 flowchart TD
     entity1["Customer"] -- Upload CSV/Excel file --> process2(("1.0\nUpload\nData"))
     entity1 -- Manual input form data --> process2
@@ -20,12 +21,12 @@ flowchart TD
     datastore6 -- Priority class details --> entity1
     n1["This is sample label"]
     n1:::note
-    
+
     classDef process fill:white,stroke:#000,stroke-width:2px
     classDef datastore fill:white,stroke:#000,stroke-width:2px
     classDef entity fill:white,stroke:#000,stroke-width:2px
     classDef note fill:white,stroke:gray,stroke-width:1px
-    
+
     class process2,process3,process4,process5 process
     class datastore1,datastore3,datastore4,datastore5,datastore6 datastore
     class entity1,entity2,entity3 entity
