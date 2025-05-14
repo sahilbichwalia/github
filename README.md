@@ -12,7 +12,7 @@ flowchart TD
     p4(["4.0 Classify Priority"])
 
     %% Data Stores
-    d1[[D1 XGBoost Model Store]]
+    d1[[D1 XGBoost Model Store
     d2[[D2  Credit Data Table]]
     d3[[D3 Application Table]]
     d4[[D4 Prediction Results Table]]
