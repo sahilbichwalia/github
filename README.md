@@ -6,17 +6,17 @@ flowchart TD
     bureau["Credit Bureau"]
 
     %% Processes
-    p1(["1.0\nUpload Data"])
-    p2(["2.0\nProcess Data"])
-    p3(["3.0\nGenerate Predictions"])
-    p4(["4.0\nClassify Priority"])
+    p1(["1.0 Upload Data"])
+    p2(["2.0  Process Data"])
+    p3(["3.0 Generate Predictions"])
+    p4(["4.0 Classify Priority"])
 
     %% Data Stores
-    d1[[D1\nXGBoost Model Store]]
-    d2[[D2\nCredit Data Table]]
-    d3[[D3\nApplication Table]]
-    d4[[D4\nPrediction Results Table]]
-    d5[[D5\nPriority Classification Table]]
+    d1[[D1 XGBoost Model Store]]
+    d2[[D2  Credit Data Table]]
+    d3[[D3 Application Table]]
+    d4[[D4 Prediction Results Table]]
+    d5[[D5 Priority Classification Table]]
 
     %% Data Flows
     customer -->|Upload CSV / Manual Data| p1
