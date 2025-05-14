@@ -1,9 +1,8 @@
-```mermaid
 flowchart TD
     %% External Entities
-    customer["Customer"]
-    admin["Administrator"]
-    bureau["Credit Bureau"]
+    customer([Customer])
+    admin([Administrator])
+    bureau([Credit Bureau])
 
     %% Processes
     p1(["1.0\nUpload Data"])
