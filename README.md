@@ -1,40 +1,39 @@
 ```mermaid
 flowchart TD
-    %% External Entities (Soft rectangles)
-    extCustomer(["Customer"]):::entity
-    extAdmin(["Administrator"]):::entity
-    extBureau(["Credit Bureau"]):::entity
+    %% External Entities
+    customer["Customer"]
+    admin["Administrator"]
+    bureau["Credit Bureau"]
 
-    %% Processes (Rounded rectangles)
-    P1(["1.0 Upload Data"]):::process
-    P2(["2.0 Process Data"]):::process
-    P3(["3.0 Generate Predictions"]):::process
-    P4(["4.0 Classify Priority"]):::process
+    %% Processes
+    p1(["1.0\nUpload Data"])
+    p2(["2.0\nProcess Data"])
+    p3(["3.0\nGenerate Predictions"])
+    p4(["4.0\nClassify Priority"])
 
-    %% Data Stores (Open-ended rectangles)
-    D1[[XGBoost Model Store]]:::store
-    D2[[Credit Data Table]]:::store
-    D3[[Application Table]]:::store
-    D4[[Prediction Results Table]]:::store
-    D5[[Priority Class Table]]:::store
+    %% Data Stores
+    d1[[D1\nXGBoost Model Store]]
+    d2[[D2\nCredit Data Table]]
+    d3[[D3\nApplication Table]]
+    d4[[D4\nPrediction Results Table]]
+    d5[[D5\nPriority Classification Table]]
 
     %% Data Flows
-    extCustomer -->|CSV/Manual Form| P1
-    P1 -->|Raw Data| D3
-    P1 -->|Confirmation| extCustomer
-    D2 -->|Historical Credit Data| P2
-    D3 -->|Application Data| P2
-    P2 -->|Preprocessed Data| P3
-    P2 -->|Validation Report| extAdmin
-    D1 -->|Model| P3
-    P3 -->|Predictions| D4
-    P3 -->|Risk Probabilities| P4
-    P4 -->|Classified Priority| D5
-    P4 -->|Risk Assessment| extCustomer
-    P4 -->|Analytics Report| extAdmin
-    D5 -->|Priority Info| extCustomer
+    customer -->|Upload CSV / Manual Data| p1
+    p1 -->|Raw Application Data| d3
+    p1 -->|Confirmation| customer
+    d2 -->|Historical Credit Data| p1
+    d3 -->|Application Data| p2
 
-    %% Styles
-    classDef process fill:#fdd,stroke:#333,stroke-width:1px
-    classDef entity fill:#fdebd0,stroke:#333,stroke-width:1px
-    classDef store fill:#fdf2d0,stroke:#333,stroke-width:1px
+    p2 -->|Preprocessed Data| p3
+    p2 -->|Validation Report| admin
+    p2 -->|Transformed Features| p3
+    d1 -->|ML Model| p3
+
+    p3 -->|Predictions| d4
+    p3 -->|Risk Probabilities| p4
+
+    p4 -->|Classified Priority| d5
+    p4 -->|Risk Assessment Results| customer
+    p4 -->|Analytics Report| admin
+    d5 -->|Priority Info| customer
