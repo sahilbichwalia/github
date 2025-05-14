@@ -35,6 +35,6 @@ flowchart TD
     D5 -->|Priority Info| extCustomer
 
     %% Styles
-    classDef process fill=#fdd,stroke=#333,stroke-width=1px
-    classDef entity fill=#fdebd0,stroke=#333,stroke-width=1px
-    classDef store fill=#fdf2d0,stroke=#333,stroke-width=1px
+    classDef process fill:#fdd,stroke:#333,stroke-width:1px
+    classDef entity fill:#fdebd0,stroke:#333,stroke-width:1px
+    classDef store fill:#fdf2d0,stroke:#333,stroke-width:1px
