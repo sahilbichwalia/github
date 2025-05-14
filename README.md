@@ -1,32 +1,72 @@
 ```mermaid
 flowchart TD
-    entity1["Customer"] -- Upload CSV/Excel file --> process2(("1.0\nUpload\nData"))
-    entity1 -- Manual input form data --> process2
-    process2 -- Raw application data --> datastore4["D3 Application table"]
-    process2 -- Confirmation --> entity1
-    datastore3["D2 Credit data table"] -- Historical credit data --> process2
-    datastore4 -- Application data --> process3(("2.0\nProcess\nData"))
-    process3 -- Preprocessed data --> process4(("3.0\nGenerate\nPredictions"))
-    entity3["Credit Bureau"] -- Bureau data --> datastore3
-    process3 -- Data validation report --> entity2["Administrator"]
-    process3 -- Transformed features --> process4
-    datastore1["D1 XGBoost model store"] -- ML model --> process4
-    process4 -- Risk probabilities --> process5(("4.0\nClassify\nPriority"))
-    process4 -- Prediction details updated --> datastore5["D4 Prediction results table"]
-    process4 -- Prediction results --> process5
-    process5 -- Priority classification --> datastore6["D5 Priority class table"]
-    process5 -- Risk assessment results --> entity1
-    process5 -- Analytics report --> entity2
-    datastore5 -- Prediction results --> process5
-    datastore6 -- Priority class details --> entity1
-    n1["This is sample label"]
-    n1:::note
+    %% External Entities
+    extCustomer([Customer])
+    extAdmin([Administrator])
+    extBureau([Credit Bureau])
 
-    classDef process fill:white,stroke:#000,stroke-width:2px
-    classDef datastore fill:white,stroke:#000,stroke-width:2px
-    classDef entity fill:white,stroke:#000,stroke-width:2px
-    classDef note fill:white,stroke:gray,stroke-width:1px
+    %% Process 1.0: Upload Data
+    subgraph P1["1.0 Upload Data"]
+        p1a[1.1 Receive Data]
+        p1b[1.2 Store Application Data]
+        p1c[1.3 Acknowledge Upload]
+    end
 
-    class process2,process3,process4,process5 process
-    class datastore1,datastore3,datastore4,datastore5,datastore6 datastore
-    class entity1,entity2,entity3 entity
+    %% Process 2.0: Process Data
+    subgraph P2["2.0 Process Data"]
+        p2a[2.1 Fetch Historical Credit Data]
+        p2b[2.2 Validate Input Data]
+        p2c[2.3 Feature Engineering]
+    end
+
+    %% Process 3.0: Generate Predictions
+    subgraph P3["3.0 Generate Predictions"]
+        p3a[3.1 Load Model]
+        p3b[3.2 Predict Risk Probability]
+        p3c[3.3 Store Prediction]
+    end
+
+    %% Process 4.0: Classify Priority
+    subgraph P4["4.0 Classify Priority"]
+        p4a[4.1 Classify Application]
+        p4b[4.2 Send Risk Result to Customer]
+        p4c[4.3 Send Analytics to Admin]
+    end
+
+    %% Data Stores
+    d1[[D1\nXGBoost Model Store]]
+    d2[[D2\nCredit Data Table]]
+    d3[[D3\nApplication Table]]
+    d4[[D4\nPrediction Results Table]]
+    d5[[D5\nPriority Classification Table]]
+
+    %% Data Flow for P1
+    extCustomer -->|CSV / Manual Form| p1a
+    p1a --> p1b
+    p1b -->|Application Data| d3
+    p1c -->|Upload Confirmation| extCustomer
+    p1b --> p1c
+
+    %% Data Flow for P2
+    p2a -->|Credit History| d2
+    d2 --> p2a
+    d3 --> p2b
+    p2b --> p2c
+    p2c -->|Transformed Data| p3a
+    p2b -->|Validation Report| extAdmin
+
+    %% Data Flow for P3
+    p3a -->|Model| d1
+    d1 --> p3a
+    p3a --> p3b
+    p3b --> p3c
+    p3c -->|Prediction Results| d4
+    p3b -->|Risk Score| p4a
+
+    %% Data Flow for P4
+    p4a -->|Priority Classification| d5
+    p4a --> p4b
+    p4a --> p4c
+    p4b -->|Risk Status| extCustomer
+    p4c -->|Analytics Report| extAdmin
+    d5 -->|Priority Info| extCustomer
